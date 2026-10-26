@@ -19,6 +19,7 @@ export default function App() {
   
   const [authorName, setAuthorName] = useState('');
   const [authorCountry, setAuthorCountry] = useState('');
+  const [authorImage, setAuthorImage] = useState('');
   const [editingAuthorId, setEditingAuthorId] = useState(null);
   const [authorError, setAuthorError] = useState('');
   const [authorSuccess, setAuthorSuccess] = useState('');
@@ -26,6 +27,7 @@ export default function App() {
   const [bookTitle, setBookTitle] = useState('');
   const [bookPrice, setBookPrice] = useState('');
   const [bookAuthorId, setBookAuthorId] = useState('');
+  const [bookImage, setBookImage] = useState('');
   const [editingBookId, setEditingBookId] = useState(null);
   const [bookError, setBookError] = useState('');
   const [bookSuccess, setBookSuccess] = useState('');
@@ -143,9 +145,11 @@ export default function App() {
     setBookSuccess('');
     setAuthorName('');
     setAuthorCountry('');
+    setAuthorImage('');
     setBookTitle('');
     setBookPrice('');
     setBookAuthorId('');
+    setBookImage('');
     setEditingAuthorId(null);
     setEditingBookId(null);
   };
@@ -181,7 +185,7 @@ export default function App() {
       const response = await fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: authorName, country: authorCountry, user_id: user.id })
+        body: JSON.stringify({ name: authorName, country: authorCountry, image_url: authorImage, user_id: user.id })
       });
       const data = await response.json();
 
@@ -191,6 +195,7 @@ export default function App() {
         setAuthorSuccess(editingAuthorId ? 'Author updated successfully!' : 'Author added successfully!');
         setAuthorName('');
         setAuthorCountry('');
+        setAuthorImage('');
         setEditingAuthorId(null);
         fetchData();
       }
@@ -203,6 +208,7 @@ export default function App() {
     setEditingAuthorId(author.author_id);
     setAuthorName(author.name);
     setAuthorCountry(author.country);
+    setAuthorImage(author.image_url || '');
     setAuthorError('');
     setAuthorSuccess('');
   };
@@ -249,7 +255,7 @@ export default function App() {
       const response = await fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: bookTitle, price: parseFloat(bookPrice) || 0, author_id: bookAuthorId, user_id: user.id })
+        body: JSON.stringify({ title: bookTitle, price: parseFloat(bookPrice) || 0, author_id: bookAuthorId, image_url: bookImage, user_id: user.id })
       });
       const data = await response.json();
 
@@ -260,6 +266,7 @@ export default function App() {
         setBookTitle('');
         setBookPrice('');
         setBookAuthorId('');
+        setBookImage('');
         setEditingBookId(null);
         fetchData();
       }
@@ -273,6 +280,7 @@ export default function App() {
     setBookTitle(book.title);
     setBookPrice(book.price);
     setBookAuthorId(String(book.author_id));
+    setBookImage(book.image_url || '');
     setBookError('');
     setBookSuccess('');
   };
@@ -298,7 +306,7 @@ export default function App() {
               {darkMode ? (
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
               ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clipRule="evenodd"></path></svg>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707-.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clipRule="evenodd"></path></svg>
               )}
             </button>
           </div>
@@ -402,7 +410,7 @@ export default function App() {
               {darkMode ? (
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
               ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707-.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clipRule="evenodd"></path></svg>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707-.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1 z" clipRule="evenodd"></path></svg>
               )}
             </button>
           </div>
@@ -416,13 +424,14 @@ export default function App() {
             <div className="space-y-4">
               <input type="text" placeholder="Author Name" value={authorName} onChange={e => setAuthorName(e.target.value)} className={`w-full px-4 py-3.5 border rounded-2xl text-sm outline-none ${darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`} />
               <input type="text" placeholder="Country" value={authorCountry} onChange={e => setAuthorCountry(e.target.value)} className={`w-full px-4 py-3.5 border rounded-2xl text-sm outline-none ${darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`} />
+              <input type="text" placeholder="Author Photo URL" value={authorImage} onChange={e => setAuthorImage(e.target.value)} className={`w-full px-4 py-3.5 border rounded-2xl text-sm outline-none ${darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`} />
             </div>
             <div className="flex gap-3 items-center">
               <button type="submit" className="w-full py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90 text-white rounded-2xl text-sm font-bold shadow-lg transition-all">
                 {editingAuthorId ? 'Update Author' : 'Add Author'}
               </button>
               {editingAuthorId && (
-                <button type="button" onClick={() => { setEditingAuthorId(null); setAuthorName(''); setAuthorCountry(''); }} className={`px-5 py-3.5 rounded-2xl text-sm font-bold transition-all ${darkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-gray-500/10 hover:bg-gray-500/30 text-gray-700'}`}>Cancel</button>
+                <button type="button" onClick={() => { setEditingAuthorId(null); setAuthorName(''); setAuthorCountry(''); setAuthorImage(''); }} className={`px-5 py-3.5 rounded-2xl text-sm font-bold transition-all ${darkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-gray-500/10 hover:bg-gray-500/30 text-gray-700'}`}>Cancel</button>
               )}
             </div>
           </form>
@@ -451,6 +460,7 @@ export default function App() {
                 }}
                 className={`w-full px-4 py-3.5 border rounded-2xl text-sm outline-none ${darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`} 
               />
+              <input type="text" placeholder="Book Cover URL" value={bookImage} onChange={e => setBookImage(e.target.value)} className={`w-full px-4 py-3.5 border rounded-2xl text-sm outline-none ${darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`} />
               <div className="space-y-2">
                 <label className={`text-xs font-semibold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>Select Author</label>
                 <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-1">
@@ -470,7 +480,7 @@ export default function App() {
                 {editingBookId ? 'Update Book' : 'Add Book'}
               </button>
               {editingBookId && (
-                <button type="button" onClick={() => { setEditingBookId(null); setBookTitle(''); setBookPrice(''); setBookAuthorId(''); }} className={`px-5 py-3.5 rounded-2xl text-sm font-bold transition-all ${darkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-gray-500/10 hover:bg-gray-500/30 text-gray-700'}`}>Cancel</button>
+                <button type="button" onClick={() => { setEditingBookId(null); setBookTitle(''); setBookPrice(''); setBookAuthorId(''); setBookImage(''); }} className={`px-5 py-3.5 rounded-2xl text-sm font-bold transition-all ${darkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-gray-500/10 hover:bg-gray-500/30 text-gray-700'}`}>Cancel</button>
               )}
             </div>
           </form>
@@ -482,6 +492,7 @@ export default function App() {
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className={`uppercase text-xs border-b ${darkMode ? 'text-slate-400 border-slate-800' : 'text-gray-400 border-gray-100'}`}>
+                  <th className="py-3 px-4">Photo</th>
                   <th className="py-3 px-4">ID</th>
                   <th className="py-3 px-4">Name</th>
                   <th className="py-3 px-4">Country</th>
@@ -491,10 +502,17 @@ export default function App() {
               <tbody>
                 {authors.map(author => (
                   <tr key={author.author_id} className={`border-b ${darkMode ? 'border-slate-800/50' : 'border-gray-50'}`}>
+                    <td className="py-4 px-4">
+                      {author.image_url ? (
+                        <img src={author.image_url} alt="" className="w-10 h-10 object-cover rounded-full shadow" />
+                      ) : (
+                        <span className="text-xs text-gray-400">No Image</span>
+                      )}
+                    </td>
                     <td className={`py-4 px-4 ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>{author.author_id}</td>
                     <td className="py-4 px-4 font-semibold">{author.name}</td>
                     <td className={`py-4 px-4 ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>{author.country}</td>
-                    <td className="py-4 px-4 text-right space-x-2">
+                    <td className="py-4 px-4 text-right whitespace-nowrap space-x-2">
                       <button onClick={() => handleEditAuthor(author)} className="px-3 py-1.5 bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold transition-all">Edit</button>
                       <button onClick={() => handleDeleteAuthor(author.author_id)} className="px-3.5 py-1.5 bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition-all">Delete</button>
                     </td>
@@ -509,6 +527,7 @@ export default function App() {
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className={`uppercase text-xs border-b ${darkMode ? 'text-slate-400 border-slate-800' : 'text-gray-400 border-gray-100'}`}>
+                  <th className="py-3 px-4">Cover</th>
                   <th className="py-3 px-4">ID</th>
                   <th className="py-3 px-4">Title</th>
                   <th className="py-3 px-4">Price</th>
@@ -519,11 +538,18 @@ export default function App() {
               <tbody>
                 {books.map(book => (
                   <tr key={book.book_id} className={`border-b ${darkMode ? 'border-slate-800/50' : 'border-gray-50'}`}>
+                    <td className="py-4 px-4">
+                      {book.image_url ? (
+                        <img src={book.image_url} alt="" className="w-8 h-12 object-cover rounded shadow" />
+                      ) : (
+                        <span className="text-xs text-gray-400">No Cover</span>
+                      )}
+                    </td>
                     <td className={`py-4 px-4 ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>{book.book_id}</td>
                     <td className="py-4 px-4 font-semibold">{book.title}</td>
                     <td className="py-4 px-4 font-black text-emerald-500">{book.price}</td>
                     <td className={`py-4 px-4 ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>{book.author_id}</td>
-                    <td className="py-4 px-4 text-right space-x-2">
+                    <td className="py-4 px-4 text-right whitespace-nowrap space-x-2">
                       <button onClick={() => handleEditBook(book)} className="px-3 py-1.5 bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500 hover:text-white rounded-xl text-xs font-bold transition-all">Edit</button>
                       <button onClick={() => handleDeleteBook(book.book_id)} className="px-3.5 py-1.5 bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white rounded-xl text-xs font-bold transition-all">Delete</button>
                     </td>
